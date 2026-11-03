@@ -1,5 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { RouterProvider } from 'react-router-dom'
+import { Toaster } from 'sonner'
+import { router } from '@/app/router/router'
 import '@/styles/index.css'
 
 const root = document.getElementById('root')
@@ -9,8 +12,7 @@ if (!root)
 
 ReactDOM.createRoot(root).render(
   <React.StrictMode>
-    <main className="mx-auto max-w-4xl p-8">
-      <h1 className="text-3xl font-bold">Объекты и задачи</h1>
-    </main>
+    <RouterProvider router={router} />
+    <Toaster richColors />
   </React.StrictMode>,
 )
