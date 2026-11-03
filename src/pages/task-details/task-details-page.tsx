@@ -7,6 +7,7 @@ import { availableTransitions, statusLabels } from '@/entities/task/model/types'
 import { useAuth } from '@/features/auth/auth-provider'
 import { deleteTask, getObject, getTask, listHistory, listProfiles, saveTask, transitionTask } from '@/shared/api/crm'
 import { AsyncState } from '@/shared/components/async-state'
+import { StatusBadge } from '@/shared/components/status-badge'
 import { Button } from '@/shared/components/ui/button'
 import { ConfirmDialog } from '@/shared/components/ui/confirm-dialog'
 import { useQuery } from '@/shared/hooks/use-query'
@@ -127,7 +128,7 @@ history.reload()
           <article className="space-y-5 rounded-xl border bg-white p-6">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div><h1 className="text-3xl font-bold">{task.data.title}</h1><p className="mt-2 text-slate-600">{task.data.description || 'Без описания'}</p></div>
-              <span className="rounded-full bg-slate-100 px-3 py-1 text-sm">{statusLabels[task.data.status]}</span>
+              <StatusBadge status={task.data.status} />
             </div>
             <dl className="grid gap-3 text-sm sm:grid-cols-2">
               <div><dt className="text-slate-500">Объект</dt><dd>{object.data?.name || 'Загрузка…'}</dd></div>

@@ -2,10 +2,10 @@ import type { FormEvent } from 'react'
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
-import { statusLabels } from '@/entities/task/model/types'
 import { useAuth } from '@/features/auth/auth-provider'
 import { getObject, listProfiles, listTasks, saveTask } from '@/shared/api/crm'
 import { AsyncState } from '@/shared/components/async-state'
+import { StatusBadge } from '@/shared/components/status-badge'
 import { Button } from '@/shared/components/ui/button'
 import { useQuery } from '@/shared/hooks/use-query'
 
@@ -88,7 +88,7 @@ title
             <Link className="block rounded-xl border bg-white p-5 hover:border-slate-400" key={task.id} to={`/tasks/${task.id}`}>
               <div className="flex items-center justify-between gap-3">
                 <strong>{task.title}</strong>
-                <span className="rounded-full bg-slate-100 px-3 py-1 text-sm">{statusLabels[task.status]}</span>
+                <StatusBadge status={task.status} />
               </div>
             </Link>
           ))}
