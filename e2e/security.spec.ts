@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test'
 import { createClient } from '@supabase/supabase-js'
 
 const url = process.env.CRM_SUPABASE_URL
-const anonKey = process.env.CRM_SUPABASE_ANON_KEY
+const anonKey = process.env.CRM_SUPABASE_PUBLISHABLE_KEY || process.env.CRM_SUPABASE_ANON_KEY
 const managerEmail = process.env.CRM_MANAGER_EMAIL
 const managerPassword = process.env.CRM_MANAGER_PASSWORD
 const executorEmail = process.env.CRM_EXECUTOR_EMAIL

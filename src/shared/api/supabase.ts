@@ -2,7 +2,7 @@ import type { Database } from '@/shared/api/database.types'
 import { createClient } from '@supabase/supabase-js'
 
 const url = import.meta.env.VITE_SUPABASE_URL
-const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+const publishableKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY
 
 export const supabase =
-  url && anonKey ? createClient<Database>(url, anonKey) : null
+  url && publishableKey ? createClient<Database>(url, publishableKey) : null
