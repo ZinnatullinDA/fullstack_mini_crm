@@ -19,22 +19,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(Boolean(supabase))
   const [session, setSession] = useState<Session | null>(null)
   const [profile, setProfile] = useState<Profile | null>(null)
-  const [error, setError] = useState<string | null>(supabase ? null : 'Не настроено подключение к Supabase. Заполните .env.local.')
+  const [error, setError] = useState<string | null>(
+    supabase
+      ? null
+      : 'Не настроено подключение к Supabase. Заполните .env.local.',
+  )
 
   useEffect(() => {
-    if (!supabase)
+    if (!supabase) 
       return
 
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => {
-      setSession(nextSession)
-      if (!nextSession)
-        setProfile(null)
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      (_event, nextSession) => {
+        setSession(nextSession)
+        if (!nextSession) 
+          setProfile(null)
 
-      setLoading(false)
-    })
+        setLoading(false)
+      },
+    )
 
     void supabase.auth.getSession().then(({ data, error: sessionError }) => {
-      if (sessionError)
+      if (sessionError) 
         setError(sessionError.message)
 
       setSession(data.session)
@@ -45,54 +51,69 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [])
 
   useEffect(() => {
-    if (!session || !supabase)
+    if (!session || !supabase) 
       return
 
     let active = true
-    void supabase.from('profiles').select('id,role,display_name').eq('id', session.user.id).single().then(({ data, error: profileError }) => {
-      if (!active)
-        return
+    void supabase
+      .from('profiles')
+      .select('id,role,display_name')
+      .eq('id', session.user.id)
+      .single()
+      .then(({ data, error: profileError }) => {
+        if (!active) 
+          return
 
-      if (profileError)
-        setError(profileError.message)
-      else
-        setProfile(data as Profile)
-    })
+        if (profileError) 
+          setError(profileError.message)
+        else setProfile(data)
+      })
 
-    return () => { active = false }
+    return () => {
+      active = false
+    }
   }, [session])
 
   async function signIn(email: string, password: string) {
-    if (!supabase)
+    if (!supabase) 
       throw new Error('Не настроено подключение к Supabase')
 
-    const { error: signInError } = await supabase.auth.signInWithPassword({ email, password })
-    if (signInError)
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
+    if (signInError) 
       throw signInError
   }
 
   async function signOut() {
-    if (!supabase)
+    if (!supabase) 
       return
 
     const { error: signOutError } = await supabase.auth.signOut()
-    if (signOutError)
+    if (signOutError) 
       throw signOutError
   }
 
-  return <AuthContext.Provider value={{
-error,
-loading,
-profile,
-session,
-signIn,
-signOut
-}}>{children}</AuthContext.Provider>
+  return (
+    <AuthContext.Provider
+      value={{
+        error,
+        loading,
+        profile,
+        session,
+        signIn,
+        signOut,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  )
 }
 
 export function useAuth(): AuthState {
   const value = useContext(AuthContext)
-  if (!value)
+  if (!value) 
     throw new Error('AuthProvider отсутствует')
 
   return value
