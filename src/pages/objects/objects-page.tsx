@@ -1,7 +1,7 @@
 import type { FormEvent } from 'react'
 import type { CrmObject } from '@/entities/task/model/types'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { useAuth } from '@/features/auth/auth-provider'
 import { deleteObject, listObjects, saveObject } from '@/shared/api/crm'
@@ -12,6 +12,7 @@ import { useQuery } from '@/shared/hooks/use-query'
 
 export function ObjectsPage() {
   const { profile } = useAuth()
+  const navigate = useNavigate()
   const { data, error, loading, reload } = useQuery(listObjects, 'objects')
   const [editing, setEditing] = useState<CrmObject | null>(null)
   const [creating, setCreating] = useState(false)
@@ -133,8 +134,23 @@ export function ObjectsPage() {
         <div className="grid gap-4 md:grid-cols-2">
           {data?.map((object) => (
             <article
-              className="rounded-xl border bg-white p-5 shadow-sm"
+              aria-label={`Открыть объект ${object.name}`}
+              className="cursor-pointer rounded-xl border bg-white p-5 shadow-sm transition hover:border-slate-400 hover:shadow-md"
               key={object.id}
+              onClick={(event) => {
+                const target = event.target as HTMLElement
+                if (target.closest('a, button, input, textarea, select'))
+                  return
+                navigate(`/objects/${object.id}`)
+              }}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault()
+                  navigate(`/objects/${object.id}`)
+                }
+              }}
+              role="link"
+              tabIndex={0}
             >
               <Link
                 className="text-lg font-semibold hover:underline"
