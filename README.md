@@ -49,18 +49,26 @@ npx playwright install chromium
 npm run test:e2e
 ```
 
-Для прямых RLS-проверок в `e2e/security.spec.ts` задайте переменные окружения `CRM_SUPABASE_URL`, `CRM_SUPABASE_PUBLISHABLE_KEY`, `CRM_MANAGER_EMAIL`, `CRM_MANAGER_PASSWORD`, `CRM_EXECUTOR_EMAIL`, `CRM_EXECUTOR_PASSWORD`, `CRM_OTHER_EXECUTOR_EMAIL`, `CRM_OTHER_EXECUTOR_PASSWORD`. Поддерживается и устаревающий `CRM_SUPABASE_ANON_KEY`. Используется только публичный ключ и вход каждым тестовым пользователем. Без этих переменных тест явно пропускается; см. `TEST_REPORT.md`.
+Для прямых RLS-проверок в `e2e/security.spec.ts` задайте переменные окружения `CRM_SUPABASE_URL`, `CRM_SUPABASE_PUBLISHABLE_KEY`, `CRM_MANAGER_EMAIL`, `CRM_MANAGER_PASSWORD`, `CRM_EXECUTOR_EMAIL`, `CRM_EXECUTOR_PASSWORD`, `CRM_OTHER_EXECUTOR_EMAIL`, `CRM_OTHER_EXECUTOR_PASSWORD`.
 
-## Production
+## Быстрый запуск
 
-Выполните `npm run build` и разместите содержимое `dist` на статическом хостинге. Настройте fallback всех путей на `index.html` для React Router. Перед сборкой укажите публичные `VITE_SUPABASE_URL` и `VITE_SUPABASE_PUBLISHABLE_KEY`; переменные `VITE_` встраиваются в клиентский bundle. В Supabase Auth добавьте домен развёрнутой SPA в разрешённые URL. Secret key, `service_role` и пароли в хостинг frontend не передавайте.
+```bash
+npm ci
+copy .env.example .env.local
+npm run dev
+```
 
-## Примечание к ESLint
+Перед запуском заполните в `.env.local` переменные `VITE_SUPABASE_URL` и `VITE_SUPABASE_PUBLISHABLE_KEY` значениями из Supabase Dashboard.
 
-В установленной версии `eslint-plugin-react` правило `react/jsx-self-closing-comp` отсутствует, поэтому включено совместимое `style/jsx-self-closing-comp`. Остальные запрошенные JSX-правила проверяются через `eslint-plugin-react`. Правило `antfu/reasonable-newline` отключено: вместе с обязательным отключением `format/prettier` оно создавало нечитабельные переносы и отступы; отступы, кавычки и точки с запятой проверяют правила `@stylistic`.
+## Команды проекта
 
-## Текущее состояние
-
-Миграции сохранены в Git и применены к целевому удалённому проекту `pgpkrhuvpqhfinszeqvy`. Локальный `supabase/config.toml` запрещает открытую регистрацию. Перед использованием приложения необходимо создать тестовые аккаунты и выполнить security E2E-тесты с реальными JWT. Подробности — в `TEST_REPORT.md`.
-
-Документация Supabase: [ключи API](https://supabase.com/docs/guides/getting-started/api-keys), [настройки Auth](https://supabase.com/docs/guides/auth/general-configuration), [применение миграций](https://supabase.com/docs/guides/deployment/database-migrations).
+```bash
+npm run dev       # запуск dev-сервера
+npm run build     # production-сборка
+npm run preview   # просмотр production-сборки
+npm run lint      # проверка ESLint
+npm run typecheck # проверка TypeScript
+npm run test      # unit-тесты
+npm run test:e2e  # e2e-тесты
+```
