@@ -41,6 +41,7 @@ export interface Database {
     Views: Record<never, never>
     Functions: {
       current_app_role: { Args: Record<never, never>; Returns: Role }
+      soft_delete_object: { Args: { p_object_id: string }; Returns: CrmObject }
       transition_task_status: {
         Args: {
           p_task_id: string

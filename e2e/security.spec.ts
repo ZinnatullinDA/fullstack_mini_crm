@@ -241,12 +241,7 @@ test('RLS and status transitions reject direct API bypasses', async () => {
     const finalHistory = await executor.from('task_status_history').select('id').eq('task_id', taskId)
     expect(finalHistory.data).toHaveLength(6)
   } finally {
-    const cleanup = await manager
-      .from('objects')
-      .update({
-        deleted_at: new Date().toISOString(),
-      })
-      .eq('id', objectId)
+    const cleanup = await manager.rpc('soft_delete_object', { p_object_id: objectId })
     expect(cleanup.error).toBeNull()
   }
 })

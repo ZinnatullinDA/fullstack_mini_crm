@@ -67,15 +67,8 @@ export async function saveObject(
 }
 
 export async function deleteObject(id: string): Promise<void> {
-  const { count, error } = await client()
-    .from('objects')
-    .update({
-      deleted_at: new Date().toISOString(),
-    }, { count: 'exact' })
-    .eq('id', id)
+  const { error } = await client().rpc('soft_delete_object', { p_object_id: id })
   ensure(error)
-  if (count !== 1)
-    throw new Error('Объект не найден или удаление запрещено')
 }
 
 export async function listTasks(
