@@ -1,0 +1,4 @@
+project_id = "mini-crm-objects-tasks"
+
+[auth]
+enable_signup = false
