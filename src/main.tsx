@@ -8,7 +8,7 @@ import '@/styles/index.css'
 
 const root = document.getElementById('root')
 
-if (!root)
+if (!root) 
   throw new Error('Не найден корневой элемент приложения')
 
 ReactDOM.createRoot(root).render(

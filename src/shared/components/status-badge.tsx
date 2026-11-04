@@ -11,5 +11,14 @@ const colors: Record<TaskStatus, string> = {
 }
 
 export function StatusBadge({ status }: { status: TaskStatus }) {
-  return <span className={cn('inline-flex rounded-full px-3 py-1 text-sm font-medium', colors[status])}>{statusLabels[status]}</span>
+  return (
+    <span
+      className={cn(
+        'inline-flex rounded-full px-3 py-1 text-sm font-medium',
+        colors[status],
+      )}
+    >
+      {statusLabels[status]}
+    </span>
+  )
 }

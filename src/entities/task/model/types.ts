@@ -1,6 +1,7 @@
 export type Role = 'manager' | 'executor'
 
-export type TaskStatus = 'new' | 'in_progress' | 'in_review' | 'accepted' | 'rework'
+export type TaskStatus =
+  'new' | 'in_progress' | 'in_review' | 'accepted' | 'rework'
 
 export interface Profile {
   id: string
@@ -46,20 +47,21 @@ export const statusLabels: Record<TaskStatus, string> = {
   rework: 'На доработке',
 }
 
-export function availableTransitions(task: Task, profile: Profile): TaskStatus[] {
+export function availableTransitions(
+  task: Task,
+  profile: Profile,
+): TaskStatus[] {
   if (profile.role === 'manager') {
-    return task.status === 'in_review'
-? ['accepted', 'rework']
-: []
-}
+    return task.status === 'in_review' ? ['accepted', 'rework'] : []
+  }
 
-  if (task.assignee_id !== profile.id)
+  if (task.assignee_id !== profile.id) 
     return []
 
-  if (task.status === 'new' || task.status === 'rework')
+  if (task.status === 'new' || task.status === 'rework') 
     return ['in_progress']
 
-  if (task.status === 'in_progress')
+  if (task.status === 'in_progress') 
     return ['in_review']
 
   return []

@@ -7,14 +7,24 @@ interface AsyncStateProps {
   children: ReactNode
 }
 
-export function AsyncState({ children, empty, error, loading }: AsyncStateProps) {
-  if (loading)
+export function AsyncState({
+  children,
+  empty,
+  error,
+  loading,
+}: AsyncStateProps) {
+  if (loading) 
     return <p role="status">Загрузка…</p>
 
-  if (error)
-    return <p className="text-red-700" role="alert">{error}</p>
+  if (error) {
+    return (
+      <p className="text-red-700" role="alert">
+        {error}
+      </p>
+    )
+  }
 
-  if (empty)
+  if (empty) 
     return <p className="text-slate-500">Пока нет данных.</p>
 
   return children
