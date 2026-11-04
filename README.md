@@ -61,6 +61,6 @@ npm run test:e2e
 
 ## Текущее состояние
 
-Миграции сохранены в Git, но не применены к удалённому проекту. Локальный `supabase/config.toml` запрещает открытую регистрацию; настройка удалённого проекта не менялась. В текущем сеансе Supabase MCP не предоставил инструменты для проверки схемы, а Docker для локальной БД не запущен. Проверки реальных ролей и RLS ожидают применения миграций, публичного ключа и трёх тестовых учётных записей. Подробности — в `TEST_REPORT.md`.
+Миграции сохранены в Git и применены к целевому удалённому проекту `pgpkrhuvpqhfinszeqvy`. Локальный `supabase/config.toml` запрещает открытую регистрацию. Перед использованием приложения необходимо создать тестовые аккаунты и выполнить security E2E-тесты с реальными JWT. Подробности — в `TEST_REPORT.md`.
 
 Документация Supabase: [ключи API](https://supabase.com/docs/guides/getting-started/api-keys), [настройки Auth](https://supabase.com/docs/guides/auth/general-configuration), [применение миграций](https://supabase.com/docs/guides/deployment/database-migrations).
